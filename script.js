@@ -39,41 +39,57 @@ function addTask() {
   
 // แสดงงานตามวันที่เลือก
 function updateTaskList() {
-    const taskSections = document.getElementById("taskSections");
-    taskSections.innerHTML = "";
-  
-    const sections = ["today", "tomorrow", "yesterday"];
-  
-    sections.forEach(section => {
+  const taskSections = document.getElementById("taskSections");
+  taskSections.innerHTML = ""; // เคลียร์ข้อมูลเดิม
+
+  const sections = ["today", "tomorrow", "yesterday"];
+
+  sections.forEach(section => {
       const date = getSectionDate(section);
+
+      // สร้าง div สำหรับแต่ละวัน และเพิ่มคลาสเพื่อแยกแต่ละวัน
+      const dayContainer = document.createElement("div");
+      dayContainer.classList.add(`task-container`, `task-container-${section}`);
+
+      // เพิ่มหัวข้อกลุ่มวัน (วันนี้, เมื่อวาน, พรุ่งนี้)
       const header = document.createElement("h3");
       header.textContent = getSectionHeader(section);
-      taskSections.appendChild(header);
-  
+      header.classList.add("task-header");
+      dayContainer.appendChild(header);
+
+      // สร้าง ul สำหรับรายการงาน
       const ul = document.createElement("ul");
+      ul.classList.add("task-list");
+
       if (tasks[date] && tasks[date].length > 0) {
-        tasks[date].forEach(task => {
-          const li = document.createElement("li");
-          li.textContent = task.text;
-          if (task.completed) li.classList.add("completed");
-  
-          li.addEventListener("click", function () {
-            task.completed = !task.completed;
-            saveTasks();
-            updateTaskList();
+          tasks[date].forEach(task => {
+              const li = document.createElement("li");
+              li.textContent = task.text;
+              if (task.completed) li.classList.add("completed");
+
+              li.addEventListener("click", function () {
+                  task.completed = !task.completed;
+                  saveTasks();
+                  updateTaskList();
+              });
+
+              ul.appendChild(li);
           });
-  
-          ul.appendChild(li);
-        });
       } else {
-        const li = document.createElement("li");
-        li.textContent = "ไม่มีงานในวันนี้";
-        ul.appendChild(li);
+          const li = document.createElement("li");
+          li.textContent = "ไม่มีงานในวันนี้";
+          ul.appendChild(li);
       }
-  
-      taskSections.appendChild(ul);
-    });
-  }
+
+      // เพิ่ม ul ที่มีรายการงานเข้าไปใน div ของวันนั้น
+      dayContainer.appendChild(ul);
+
+      // เพิ่ม div ของวันนั้นเข้าไปใน taskSections
+      taskSections.appendChild(dayContainer);
+  });
+}
+
+
   
   
 
