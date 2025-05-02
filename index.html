@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>📅 สมุดแจ้งเตือน To-Do</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📅 สมุดแจ้งเตือน</h1>
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="งานที่ต้องทำ...">
+      <button onclick="addTask()">➕ เพิ่มงาน</button>
+    </div>
+
+    <div class="date-picker">
+      <button onclick="setDate('today')">วันนี้</button>
+      <button onclick="setDate('yesterday')">เมื่อวาน</button>
+      <button onclick="setDate('tomorrow')">พรุ่งนี้</button>
+
+
+    </div>
+
+    <div id="taskSections"></div>
+
+    <button onclick="clearAllTasks()">ลบงานทั้งหมด</button>
+  </div>
+
+  <script src="script.js"></script>
+
+  
+</body>
+</html>
